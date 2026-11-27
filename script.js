@@ -1,5 +1,5 @@
 /* ==========================================
-   AMREEN & ANIL - WEDDING INVITATION JS
+   Anil & Amrita - WEDDING INVITATION JS
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -74,24 +74,24 @@ document.addEventListener("DOMContentLoaded", () => {
             const calendar = 
 `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Amreen & Anil Wedding//EN
+PRODID:-//Anil & Amrita Wedding//EN
 BEGIN:VEVENT
-SUMMARY:Wedding Reception - Amreen & Anil
-DESCRIPTION:Celebrating the Wedding Reception of Amreen & Anil #AA♾️♥️
+SUMMARY:Wedding Reception - Anil & Amrita
+DESCRIPTION:Celebrating the Wedding Reception of Anil & Amrita #AA♾️♥️
 LOCATION:Goldfinch Retreat, Bengaluru
 DTSTART:20270131T110000
 DTEND:20270131T160000
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:The Color Ceremony - Amreen & Anil
-DESCRIPTION:Celebrating The Color Ceremony of Amreen & Anil #AA♾️♥️
+SUMMARY:The Color Ceremony - Anil & Amrita
+DESCRIPTION:Celebrating The Color Ceremony of Anil & Amrita #AA♾️♥️
 LOCATION:Goldfinch Retreat, Bengaluru
 DTSTART:20270131T170000
 DTEND:20270131T200000
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Wedding Ceremony - Amreen & Anil
-DESCRIPTION:Celebrating the Wedding Ceremony of Amreen & Anil #AA♾️♥️
+SUMMARY:Wedding Ceremony - Anil & Amrita
+DESCRIPTION:Celebrating the Wedding Ceremony of Anil & Amrita #AA♾️♥️
 LOCATION:Goldfinch Retreat, Bengaluru
 DTSTART:20270201T103000
 DTEND:20270201T150000
@@ -101,7 +101,7 @@ END:VCALENDAR`;
             const file = new Blob([calendar], { type: "text/calendar" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(file);
-            link.download = "Amreen-Anil-Wedding-Events.ics";
+            link.download = "Anil-Amrita-Wedding-Events.ics";
             link.click();
         });
     }
