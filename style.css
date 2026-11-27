@@ -1,0 +1,923 @@
+/* ==========================================
+   AMREEN & ANIL LUXURY WEDDING INVITATION
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100dvh;
+    overflow-x: hidden;
+    color: #1e293b;
+    font-family: "Cormorant Garamond", serif;
+    background: #d4e4dd;
+}
+
+/* FLOATING HEARTS */
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.hearts span {
+    position: absolute;
+    bottom: -50px;
+    left: var(--left);
+    font-size: var(--size);
+    color: #9b2226;
+    opacity: 0;
+    animation: luxuryHeartFloat var(--time) linear infinite;
+}
+
+.hearts span:nth-child(1){ --left:8%; --size:18px; --time:12s; }
+.hearts span:nth-child(2){ --left:28%; --size:28px; --time:16s; animation-delay:3s; }
+.hearts span:nth-child(3){ color:#ffffff; --left:50%; --size:22px; --time:14s; }
+.hearts span:nth-child(4){ --left:72%; --size:24px; --time:15s; animation-delay:2s; }
+.hearts span:nth-child(5){ --left:90%; --size:20px; --time:13s; animation-delay:5s; }
+
+@keyframes luxuryHeartFloat {
+    0% { transform: translateY(0) rotate(0deg) scale(.8); opacity: 0; }
+    20% { opacity: .8; }
+    50% { transform: translateY(-50vh) rotate(180deg) scale(1); }
+    100% { transform: translateY(-120vh) rotate(360deg) scale(.8); opacity: 0; }
+}
+
+/* MUSIC BUTTON */
+.music-button {
+    position: fixed;
+    right: 20px;
+    bottom: 25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: #c8b2d6;
+    color: #3a4b5c;
+    font-size: 20px;
+    z-index: 200;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
+.music-button.playing {
+    animation: musicPulse 1.5s infinite;
+}
+
+@keyframes musicPulse {
+    50% { transform: scale(1.1); }
+}
+
+/* MUSIC BUTTON STRIKE-THROUGH SLASH WHEN MUTED */
+.music-button:not(.playing)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    width: 60%;
+    height: 2.5px;
+    background-color: #3a4b5c; /* Matches your icon color */
+    transform: translateY(-50%) rotate(-45deg);
+    border-radius: 2px;
+}
+
+/* ==========================================
+   UNIFORM CARD CONTAINERS & SCREEN-FIT FIXES
+========================================== */
+.screen-section {
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 10px;
+}
+
+.card-wrapper {
+    width: min(92vw, 400px);
+    height: min(85dvh, 580px);
+    max-height: 580px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f4f8f6;
+}
+
+.card-relative-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+}
+
+/* ==========================================
+   UNIFIED BRIGHT BACKGROUND LOGO WATERMARK
+========================================== */
+.card-watermark-bg,
+.royal-watermark-bg,
+.logo-watermark {
+    position: absolute;
+    inset: 0;
+    background-image: url('images/logo.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.35; /* Consistent bright visibility across all cards */
+    filter: brightness(1.05) contrast(1.02);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.faint-logo-watermark {
+    opacity: 0.30;
+}
+
+/* ==========================================
+   1. ENVELOPE LANDING SCREEN & POEM CARD
+========================================== */
+#envelopeScene {
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1500px;
+    padding: 12px 10px;
+}
+
+.real-envelope {
+    width: min(92vw, 400px);
+    height: min(85dvh, 580px);
+    max-height: 580px;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: #dcebe4;
+    border: 1.5px solid #c2d8cd;
+    box-shadow: 0 20px 40px rgba(0,0,0,.12);
+}
+
+.envelope-front {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 65%;
+    background: #dcebe4;
+    border: 1.5px solid #c2d8cd;
+    border-radius: 0 0 16px 16px;
+    z-index: 5;
+    transition: transform 1.5s cubic-bezier(.65,0,.35,1), opacity 0.8s ease 0.4s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 25px;
+}
+
+.envelope-flap-3d {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #d5e5dd;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    border: 1.5px solid #b8cebf;
+    transform-origin: top;
+    transition: transform 1.2s cubic-bezier(.65,0,.35,1), opacity 0.8s ease 0.4s;
+    z-index: 8;
+}
+
+#envelopeScene.open .envelope-flap-3d {
+    transform: rotateX(180deg);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#envelopeScene.open .envelope-front {
+    transform: translateY(180px);
+    opacity: 0;
+}
+
+/* POEM CARD CONTAINER */
+.hidden-card {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #f4f8f6;
+    border-radius: 16px;
+    z-index: 10;
+    opacity: 0;
+    transform: scale(0.92);
+    transition: transform 1.5s ease, opacity 1.2s ease;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden-card .card-watermark-bg {
+    opacity: 0.35;
+    filter: brightness(1.05) contrast(1.02);
+}
+
+.mini-card {
+    position: relative;
+    z-index: 3;
+    padding: 20px 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.envelope-poem {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.5rem, 4.5vw, 1.5rem);
+    font-style: italic;
+    font-weight: 1000;
+    line-height: 1.7;
+    color: #1e293b;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+#envelopeScene.open .hidden-card {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* ENVELOPE FRONT TEXT */
+.envelope-intro-text {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 15px;
+}
+
+.poetic-quote {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.15rem, 3.8vw, 1.35rem);
+    color: #1a2e26;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.tap-text {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #2c4238;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+/* WAX SEAL */
+.wax-seal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 95px;
+    height: 95px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 20;
+    padding: 0;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.seal-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+}
+
+.wax-seal:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+    filter: brightness(1.05);
+}
+
+#envelopeScene.open .wax-seal {
+    animation: sealDisappear 0.9s forwards;
+}
+
+@keyframes sealDisappear {
+    100% { transform: translate(-50%, -130%) scale(0); opacity: 0; }
+}
+
+/* ==========================================
+   MAIN INVITATION CONTENT
+========================================== */
+#invitation {
+    display: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+#invitation.show {
+    display: block;
+    opacity: 1;
+}
+
+/* ==========================================
+   2. COVER PHOTO & COUNTDOWN
+========================================== */
+/* SMOOTH FULL-IMAGE COVER CARD */
+.cover-overlay {
+    background: linear-gradient(180deg, #dce6ea 0%, #cbd9de 100%); /* Soft sky tone matching your photo */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cover-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Keeps 100% of the image visible (tower tip + feet) */
+    display: block;
+    /* Softly blends photo edges into the background */
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.cover-details {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    color: #ffffff;
+    padding-top: 24px;
+    padding-left: 45px;          /* Nudges the whole block to the right */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 55%);
+    z-index: 5;
+}
+
+.cover-details h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.2rem, 6.5vw, 3.2rem);
+    font-style: italic;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+}
+
+.cover-details h1 span { color: #e2c9ed; }
+
+.countdown-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1rem, 3.5vw, 1.3rem);
+    letter-spacing: 1.0px;
+    margin-bottom: 4px;
+    /*text-transform: uppercase;*/
+    font-weight: 1000;
+    color: #f1f5f9;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+	font-style: italic;
+}
+
+.cover-countdown {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.cover-countdown div {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 4px 6px;
+    min-width: 44px;
+}
+
+.cover-countdown span {
+    font-size: 1.25rem;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.cover-countdown small { 
+    font-family: "Montserrat", sans-serif;
+    font-size: .55rem; 
+    color: #e2eae3;
+}
+
+/* ==========================================
+   3. ROYAL RECEPTION CARD
+========================================== */
+.royal-card {
+    background: #f4f8f6;
+    border: 1px solid #c2d8cd;
+    position: relative;
+}
+
+.royal-card-inner {
+    position: relative;
+    z-index: 3;
+    padding: 18px 12px;
+    text-align: center;
+    color: #1e293b;
+    width: 100%;
+}
+
+.small-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.5rem, 3.5vw, 1.35rem);
+    font-style: italic;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+.royal-content h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.4rem, 8.5vw, 3.6rem);
+    font-weight: 500;
+    font-style: italic;
+    color: #1e293b;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+.royal-content h1 span { color: #8b3a52; }
+
+.gold-divider { 
+    color: #8b3a52; 
+    margin: 6px 0; 
+    font-size: 1.1rem; 
+	font style: italic;
+}
+
+.royal-content h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.8rem, 5.5vw, 2.4rem);
+    color: #1e293b;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+.date {
+    font-family: "Cormorant Garamond", serif;
+    color: #1e293b;
+    font-size: 1rem;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+    margin-top: 6px;
+}
+
+.date strong {
+    font-family: "Montserrat", sans-serif;
+    color: #1e293b;
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.date .date-number {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+    color: #1e293b;
+    font-weight: 1000;
+    display: inline-block;
+    margin: 2px 0;
+}
+
+.date .event-time {
+    font-family: "Cormorant Garamond", serif;
+    color: #1e293b;
+    font-size: 2rem;
+    font-weight: 1000;
+	font-style: italic;
+   margin: 2px 0;
+}
+
+/* ==========================================
+   4, 5, 6. VENUE, RSVP & GIFT CARDS (RESPONSIVE)
+========================================== */
+.gold-frame {
+    padding: 18px 15px;
+    background: #f4f8f6;
+    border: 1px solid #c2d8cd;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gold-frame h2, 
+.gallery-wrapper h2 { 
+    font-family: "Cormorant Garamond", serif; 
+    font-size: clamp(1.7rem, 5.2vw, 2.3rem); 
+    color: #1e293b; 
+    font-weight: 600; 
+    line-height: 1.2;
+    margin-bottom: 4px;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+.gold-frame h3 { 
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.1rem, 3.5vw, 1.35rem); 
+    color: #3a4b5c; 
+    margin: 4px 0; 
+    font-weight: 600; 
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+.gold-frame p { 
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(0.95rem, 3.2vw, 1.1rem); 
+    color: #1e293b; 
+    line-height: 1.4; 
+    margin-bottom: 10px; 
+    font-weight: 600; 
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+/* GIFT & UPI SCANNER & HANDLES */
+.qr-container {
+    width: 120px;
+    height: 120px;
+    margin: 4px auto;
+    padding: 6px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.qr-image { width: 100%; height: 100%; object-fit: contain; }
+
+.upi-handles-container {
+    margin: 6px auto;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.upi-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 5px 8px;
+    font-size: 0.78rem;
+    color: #1e293b;
+    font-weight: 500;
+}
+
+.upi-item strong {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #3a4b5c;
+}
+
+.copy-btn {
+    background: #3a4b5c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-size: 0.68rem;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    transition: background 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: #2b3642;
+}
+
+.copy-btn.copied {
+    background: #2e7d32;
+}
+
+/* GALLERY */
+.gallery-wrapper {
+    background: #f4f8f6;
+    padding: 15px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.gallery-wrapper h2 {
+    margin-bottom: 6px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.gallery-item {
+    width: 100%;
+    height: 110px;
+    border-radius: 8px;
+    background: #f8fafc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.gallery-item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* BUTTONS */
+.luxury-button {
+    display: inline-flex;
+    padding: 9px 18px;
+    border-radius: 25px;
+    text-decoration: none;
+    background: #3a4b5c;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: .78rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-top: 4px;
+}
+
+.luxury-button.outline {
+    background: transparent;
+    color: #3a4b5c;
+    border: 1px solid #3a4b5c;
+}
+
+/* CLOSING */
+.closing {
+    background: #3a4b5c;
+    color: white;
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.closing p {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: #e2eae3;
+    max-width: 450px;
+    margin: 0 auto 8px;
+}
+
+.hashtag {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #c8b2d6;
+    letter-spacing: 2px;
+}
+
+/* GALLERY CARD CONTAINER FIX */
+.gallery-section .card-relative-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 16px 12px;
+    box-sizing: border-box;
+    z-index: 2; /* Ensures title stays above watermark */
+}
+
+/* GALLERY GRID LAYOUT FOR MOBILE */
+.gallery-grid,
+.photo-gallery,
+.gallery-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 balanced columns */
+    gap: 8px;                               /* Clean spacing between photos */
+    width: 100%;
+    max-width: 100%;
+    margin-top: 10px;
+    overflow-y: auto;                       /* Smooth scrolling if photos exceed card height */
+    max-height: calc(100dvh - 180px);        /* Prevents spilling outside the card frame */
+    padding-bottom: 8px;
+}
+
+/* INDIVIDUAL PHOTO STYLING */
+.gallery-grid img,
+.photo-gallery img,
+.gallery-wrapper img {
+    width: 100%;
+    height: 130px;                          /* Fixed uniform height for grid symmetry */
+    object-fit: contain;                      /* Prevents image distortion/stretching */
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Container for 2 photos per card */
+.gallery-two-pack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    height: calc(100% - 50px);
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    box-sizing: border-box;
+}
+
+/* Photo wrapper frame */
+.photo-container {
+    width: 100%;
+    height: 45%; /* Gives each photo ample vertical space without overflow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Image behavior: Uncropped & complete display */
+.gallery-two-pack img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Keeps full image visible without cropping any edges */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+/* =======================================================
+   UNIVERSAL SCROLLING & VIEWPORT FIX FOR ALL BROWSERS
+   ======================================================= */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Essential for smooth touch scrolling on iOS */
+}
+
+.screen-section {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* LIGHTBOX OVERLAY */
+.lightbox-modal {
+    display: none; 
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 15px;
+	pointer-events: auto; /* Ensures touch events are captured here */
+    touch-action: none;   /* Disables native pinch/scroll gestures on the overlay */
+}
+
+/* CONTENT WRAPPER */
+.lightbox-content-wrapper {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PREVIEW IMAGE */
+#lightboxImg {
+    max-width: 95vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* CLOSE BUTTON */
+.lightbox-close-btn {
+    margin-bottom: 12px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.2s ease;
+}
+
+.lightbox-close-btn:hover {
+    background-color: #dcebe4;
+}
+
+/* BOUNCING SCROLL INDICATOR WITH TEXT */
+.scroll-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.scroll-text {
+    font-family: "Cormorant Garamond", sans-serif;
+	font-style: italic;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #3a4b5c;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.chevron {
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #3a4b5c;
+    border-bottom: 2px solid #3a4b5c;
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) rotate(45deg);
+    }
+    40% {
+        transform: translateY(-5px) rotate(45deg);
+    }
+    60% {
+        transform: translateY(-2px) rotate(45deg);
+    }
+}
